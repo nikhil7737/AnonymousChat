@@ -1,0 +1,45 @@
+.chatUsers {
+	background-color: black;
+	padding: 12px 0;
+}
+
+.chatUser {
+	background-color: rgba(165, 158, 158, 0.257);
+	border: 1px solid rgba(165, 158, 158, 0.257);
+	border-radius: 16px;
+	padding: 12px;
+	margin: 12px 20px;
+	display: flex;
+	align-items: center;
+}
+
+.profilePic {
+	border-radius: 50%;
+	margin-right: 16px;
+}
+
+.nameMsgBlock {
+	margin-right: 8px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+
+
+.lastMessageTime {
+	color: rgb(230, 220, 220);
+	font-size: 16px;
+	width: 100px;
+}
+
+.userName {
+	color: white;
+	font-size: 19px;
+	font-family: system-ui;
+}
+
+.lastMessage {
+	color: white;
+	font-size: 17px;
+}
