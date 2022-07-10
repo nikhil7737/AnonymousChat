@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
 import Chats from "./components/ListView/Chats";
+import Messages from "./components/MessageView/Messages";
 
 const chats = [
   {
@@ -37,6 +38,52 @@ const chats = [
   },
 ];
 
+const messages = [
+  {
+    text: "text",
+    senderId: 34,
+    senderName: "nikhil",
+  },
+  {
+    text: "text",
+    senderId: 34,
+    senderName: "nikhl",
+  },
+  {
+    text: "text",
+    senderId: 34,
+    senderName: "nikhil",
+  },
+  {
+    text: "jflksdfj skdlf kdslf ksd kfds f",
+    senderId: 35,
+    senderName: "rahul",
+    isOwnMessage: true,
+  },
+  {
+    text: "text",
+    senderId: 35,
+    senderName: "rahul",
+    isOwnMessage: true,
+  },
+  {
+    text: "text fksdflsd flksd fks ",
+    senderId: 35,
+    senderName: "rahul",
+    isOwnMessage: true,
+  },
+  {
+    text: "text fkds flds lfksjd klf dsklf dskf sdkf skdf ksdf kds fksdf klds fksldf ksdlf sd",
+    senderId: 34,
+    senderName: "nikhl",
+  },
+  {
+    text: "textklf ld fkds fkds jfklds fkdsjkldsjlfnikhl rahtoerei fdkfni tige lion ksi tand",
+    senderId: 34,
+    senderName: "nikhil",
+  },
+];
+
 export default class App extends Component {
   static displayName = App.name;
 
@@ -44,6 +91,7 @@ export default class App extends Component {
     return (
       <>
         <Route exact path="/chats" component={() => <Chats chats={chats} />} />
+        <Route exact path="/messages" component={() => <Messages chats={messages} />} />
       </>
     );
   }
