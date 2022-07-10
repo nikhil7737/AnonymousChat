@@ -1,0 +1,15 @@
+.messageSender {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    background-color: #585b64;
+    position: sticky;
+    bottom: 0;
+}
+
+.textbox {
+    width: 100%;
+    background-color: #1f232f;
+    color: white;
+    margin-right: 12px;
+}

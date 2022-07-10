@@ -3,6 +3,8 @@ import MessagePageHeader from "./MessagePageHeader";
 import Messages from "./Messages";
 import MessageSender from "./MessageSender";
 
+
+
 const MessagePage = ({ messages }) => {
   return (
     <div>
@@ -11,8 +13,8 @@ const MessagePage = ({ messages }) => {
         messagePageTitle="Covid 19"
         description="description"
       />
-      {/* <Messages />
-      <MessageSender /> */}
+      <Messages messages={messages}/>
+      <MessageSender />
     </div>
   );
 };
