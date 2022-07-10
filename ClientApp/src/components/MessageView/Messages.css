@@ -1,6 +1,6 @@
 .messages {
 	padding: 20px 16px;
-	background-color: rgb(71, 70, 71);
+	background-color: #292f3f;
 }
 
 .ownMessageGroup {
@@ -24,13 +24,13 @@
 }
 
 .ownMessage {
-	background-color: #4e3232;
+	background-color: #1f232f;
 	margin-left: 20%;
 	color: white;
 }
 
 .notOwnMessage {
-	background-color: rgb(134 124 124);
+	background-color: #373e4e;
 	margin-right: 20%;
 	color: rgb(255, 215, 215)
 }

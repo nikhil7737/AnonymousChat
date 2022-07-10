@@ -1,5 +1,5 @@
 .messagePageHeader {
-  position: fixed;
+  position: sticky;
   top: 0;
   background-color: #373e4e;
   padding: 16px 12px;
