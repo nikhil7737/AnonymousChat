@@ -10,7 +10,7 @@ const Messages = ({ messages }) => {
   // ]
 
   if (!messages || messages.length === 0) {
-    return;
+    return null;
   }
   let prevMessageSenderId = 0;
   let groupedMessages = [];

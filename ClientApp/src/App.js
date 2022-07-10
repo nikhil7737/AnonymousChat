@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
 import Chats from "./components/ListView/Chats";
-import Messages from "./components/MessageView/Messages";
+import MessagePage from "./components/MessageView/MessagePage";
 
 const chats = [
   {
@@ -91,7 +91,7 @@ export default class App extends Component {
     return (
       <>
         <Route exact path="/chats" component={() => <Chats chats={chats} />} />
-        <Route exact path="/messages" component={() => <Messages chats={messages} />} />
+        <Route exact path="/messages" component={() => <MessagePage messages={messages} />} />
       </>
     );
   }

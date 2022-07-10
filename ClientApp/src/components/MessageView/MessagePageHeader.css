@@ -1,0 +1,26 @@
+.messagePageHeader {
+  position: fixed;
+  top: 0;
+  background-color: #373e4e;
+  padding: 16px 12px;
+  display: flex;
+	align-items: center;
+  width: 100%;
+}
+
+.messagePageheaderImg {
+  margin-right: 12px;
+  border-radius: 50%;
+}
+
+.messagePageTitle {
+  font-size: 23px;
+  color: white;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
+.messagePageDesc {
+  font-size: 18px;
+  color: white;
+}
