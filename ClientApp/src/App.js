@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
+import Home from "./components/Home/Home";
 import Chats from "./components/ListView/Chats";
 import MessagePage from "./components/MessageView/MessagePage";
 
@@ -90,6 +91,7 @@ export default class App extends Component {
   render() {
     return (
       <>
+        <Route exact path="/" component={Home}/>
         <Route exact path="/chats" component={() => <Chats chats={chats} />} />
         <Route exact path="/messages" component={() => <MessagePage messages={messages} />} />
       </>

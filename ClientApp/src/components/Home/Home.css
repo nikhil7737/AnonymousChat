@@ -1,0 +1,50 @@
+.homeContainer {
+  position: absolute;
+  height: 100%;
+  background-color: #292f3f;
+  width: 100%;
+  height: 100%;
+  display: flex;
+	font-size: 30px;
+	font-family: monospace;
+}
+
+.home {
+  width: fit-content;
+  margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.chatIcon {
+	margin-bottom: 20px;
+}
+
+.homePageTitle {
+	font-size: 25px;
+	font-weight: 700;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	margin-bottom: 12px;
+	color: white;
+}
+
+.homePageDesc {
+	font-size: 18px;
+	color: white;
+	margin-bottom: 36px;
+}
+
+.inputName {
+	padding: 16px;
+	border-radius: 30px;
+	font-size: 20px;
+	text-align: center;
+	width: 300px;
+	margin-bottom: 20px;
+	border: 1px solid black;
+}
+
+.startChatButton {
+	background-color: green;
+}
