@@ -44,6 +44,7 @@ namespace AnonymousChat
                 app.UseHsts();
             }
 
+            app.UseWebSockets();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
