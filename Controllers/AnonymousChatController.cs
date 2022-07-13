@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AnonymousChat.DTO;
@@ -40,17 +41,17 @@ namespace AnonymousChat.Controllers
         {
             var message = new Message
             {
-                MessageType = MessageType.AnonymousUserFound,
+                Type = MessageType.AnonymousUserFound,
             };
             byte[] byteArr = Encoding.UTF8.GetBytes(message.ToString());
             Task a = currentClient.Connection.SendAsync(byteArr, WebSocketMessageType.Text, true, CancellationToken.None);
             Task b = freeClient.Connection.SendAsync(byteArr, WebSocketMessageType.Text, true, CancellationToken.None);
             await Task.WhenAll(a, b);
+
             a = HandleChat(currentClient.Connection, freeClient.Connection);
             b = HandleChat(freeClient.Connection, currentClient.Connection);
-            await Task.WhenAll(a, b);
+            await Task.WhenAny(a, b);
 
-            
             //Chat over
         }
 
@@ -61,7 +62,20 @@ namespace AnonymousChat.Controllers
                 var byteArr = new byte[1000];
                 WebSocketReceiveResult receiveResult = await sender.ReceiveAsync(byteArr, CancellationToken.None);
                 byteArr = byteArr.Take(receiveResult.Count).ToArray();
-                await receiver.SendAsync(byteArr, WebSocketMessageType.Text, true, CancellationToken.None);
+                Message message = JsonSerializer.Deserialize<Message>(byteArr);
+
+                if (message.Type == MessageType.EndAnonymousChatRequested)
+                {
+                    await receiver.SendMessage(new Message
+                    {
+                        Type = MessageType.AnonymousChatEnded
+                    });
+                    break;
+                }
+                else
+                {
+                    await receiver.SendMessage(message);
+                }
             }
         }
     }
