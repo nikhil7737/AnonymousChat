@@ -7,7 +7,10 @@ namespace AnonymousChat.Utils
     {
         public static bool AreConnectionsAlive(params WebSocket[] connections)
         {
-            return connections.All(con => con.State != WebSocketState.Closed && con.State != WebSocketState.CloseReceived);
+            return connections.All
+            (
+                con => con == null || (con.State != WebSocketState.Closed && con.State != WebSocketState.CloseReceived)
+            );
         }
     }
 }

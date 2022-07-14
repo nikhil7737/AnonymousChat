@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -9,11 +10,12 @@ namespace AnonymousChat
 {
     public static class MessageUtils
     {
-        public static async Task<string> GetMessage(this WebSocket ws)
+        public static async Task<Message> GetMessage(this WebSocket ws)
         {
-            byte[] byteSegment = new byte[1000];
-            var receiveResponse = await ws.ReceiveAsync(byteSegment, CancellationToken.None);
-            return Encoding.UTF8.GetString(byteSegment, 0, receiveResponse.Count);
+            var byteSegment = new byte[1000];
+            WebSocketReceiveResult receiveResult = await ws.ReceiveAsync(byteSegment, CancellationToken.None);
+            byteSegment = byteSegment.Take(receiveResult.Count).ToArray();
+            return JsonSerializer.Deserialize<Message>(byteSegment);
         }
         public static async Task SendMessage(this WebSocket ws, Message message)
         {

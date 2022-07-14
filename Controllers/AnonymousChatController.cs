@@ -24,15 +24,19 @@ namespace AnonymousChat.Controllers
                 return BadRequest("Only websocket request acceptable");
             }
             WebSocket connection = await HttpContext.WebSockets.AcceptWebSocketAsync();
-            string anonymousName = await connection.GetMessage();
+            Message message = await connection.GetMessage();
+            string anonymousName = message.Text;
             var currentClient = new Client(connection, anonymousName);
             if (ConnectionManager.FreeClients.Count == 0)
             {
                 ConnectionManager.FreeClients.Add(currentClient);
+                await HandleChat(currentClient.Connection);
             }
             else
             {
                 Client freeClient = ConnectionManager.FreeClients.Last();
+                ConnectionManager.FreeClients.Remove(freeClient);
+                ConnectionManager.AddPairing(currentClient.Connection, freeClient.Connection);
                 await Connect(currentClient, freeClient);
             }
             return Ok();
@@ -43,27 +47,22 @@ namespace AnonymousChat.Controllers
             {
                 Type = MessageType.AnonymousUserFound,
             };
-            byte[] byteArr = Encoding.UTF8.GetBytes(message.ToString());
-            Task a = currentClient.Connection.SendAsync(byteArr, WebSocketMessageType.Text, true, CancellationToken.None);
-            Task b = freeClient.Connection.SendAsync(byteArr, WebSocketMessageType.Text, true, CancellationToken.None);
-            await Task.WhenAll(a, b);
-
-            a = HandleChat(currentClient.Connection, freeClient.Connection);
-            b = HandleChat(freeClient.Connection, currentClient.Connection);
-            await Task.WhenAny(a, b);
-
-            //Chat over
+            Task sendTask1 = currentClient.Connection.SendMessage(message);
+            Task sendTask2 = freeClient.Connection.SendMessage(message);
+            await Task.WhenAll(sendTask1, sendTask2);
+            await HandleChat(currentClient.Connection);
         }
 
-        private async Task HandleChat(WebSocket sender, WebSocket receiver)
+        private async Task HandleChat(WebSocket sender)
         {
+            WebSocket receiver = null;
             while (ConnectionUtils.AreConnectionsAlive(sender, receiver))
             {
-                var byteArr = new byte[1000];
-                WebSocketReceiveResult receiveResult = await sender.ReceiveAsync(byteArr, CancellationToken.None);
-                byteArr = byteArr.Take(receiveResult.Count).ToArray();
-                Message message = JsonSerializer.Deserialize<Message>(byteArr);
-
+                Message message = await sender.GetMessage();
+                if (receiver == null)
+                {
+                    receiver = ConnectionManager.GetPairedUser(sender);
+                }
                 if (message.Type == MessageType.EndAnonymousChatRequested)
                 {
                     await receiver.SendMessage(new Message
