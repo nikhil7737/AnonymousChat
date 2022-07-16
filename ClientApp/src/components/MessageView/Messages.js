@@ -1,6 +1,8 @@
 import React from "react";
+import { messageType } from "../../Utils";
 import "./Messages.css";
-const Messages = ({ messages }) => {
+
+const Messages = (props) => {
   // messages = [
   //     {
   //         text: "text",
@@ -9,9 +11,16 @@ const Messages = ({ messages }) => {
   //     }
   // ]
 
-  if (!messages || messages.length === 0) {
-    return null;
-  }
+  const {messages, setMessages, ws} = props;
+  ws.onmessage = (e) => {
+    const message = JSON.parse(e.data);
+    if (message.type === messageType.anonymousChatEnded) {
+      alert("chat ended. Do you want to chat again");
+      return;
+    }
+    setMessages([...messages, message]);
+  };
+
   let prevMessageSenderId = 0;
   let groupedMessages = [];
   for (const message of messages) {
@@ -29,27 +38,32 @@ const Messages = ({ messages }) => {
       groupedMessages[groupedMessages.length - 1].messages.push(message);
     }
   }
+
+  let startInd = 0;
   return (
     <div className="messages">
-      {groupedMessages.map((group) => (
-        <Message {...group} />
-      ))}
+      {groupedMessages.map((group) => {
+        startInd += group.messages.length;
+        return (
+          <Message {...group} startInd={startInd - group.messages.length} />
+        );
+      })}
     </div>
   );
 };
 
 const Message = (props) => {
-  const { messages, sender } = props;
+  const { messages, sender, startInd } = props;
   const senderId = sender.id;
   const senderName = sender.name;
   const isOwnMessage = messages[0].isOwnMessage;
   return (
     <div className={`messageGroup${isOwnMessage ? " ownMessageGroup" : ""}`}>
       {!isOwnMessage && <div className="senderName">{senderName}</div>}
-      {messages.map((message) => (
+      {messages.map((message, ind) => (
         <div
           className={`message ${isOwnMessage ? "ownMessage" : "notOwnMessage"}`}
-          key={message.id}
+          key={startInd + ind}
         >
           {message.text}
         </div>

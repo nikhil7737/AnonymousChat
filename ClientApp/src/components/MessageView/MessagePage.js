@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import MessagePageHeader from "./MessagePageHeader";
 import Messages from "./Messages";
 import MessageSender from "./MessageSender";
+import defaultUserPic from "../../Images/defaultUser.jpeg";
 
+const MessagePage = (props) => {
+  const { headerInfo, ws } = props;
+  const [messages, setMessages] = useState(props.messages || []);
+  headerInfo.profilePicUrl = headerInfo.profilePicUrl || defaultUserPic;
 
-
-const MessagePage = ({ messages }) => {
   return (
     <div>
-      <MessagePageHeader
-        profilePicUrl="https://imgd-ct.aeplcdn.com/664x415/n/cw/ec/32597/altroz-exterior-left-front-three-quarter.jpeg?q=75"
-        messagePageTitle="Covid 19"
-        description="description"
+      <MessagePageHeader {...headerInfo} />
+      <Messages messages={messages} setMessages={setMessages} ws={ws} />
+      <MessageSender
+        ws={ws}
+        addMessage={(message) =>
+          setMessages([...messages, { ...message, isOwnMessage: true }])
+        }
       />
-      <Messages messages={messages}/>
-      <MessageSender />
     </div>
   );
 };

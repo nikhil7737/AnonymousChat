@@ -7,7 +7,7 @@ export const LeftArrow = () => {
       class="leftArrow"
       viewBox="0 0 16 16"
       fill="currentcolor"
-      tabindex="-1"
+      tabIndex="-1"
       focusable="false"
       aria-hidden="true"
       role="img"
@@ -17,7 +17,7 @@ export const LeftArrow = () => {
   );
 };
 
-export const SendButton = () => {
+export const SendButton = ({onClick}) => {
   return (
     <svg
       version="1.0"
@@ -27,6 +27,7 @@ export const SendButton = () => {
       viewBox="0 0 524.000000 515.000000"
       preserveAspectRatio="xMidYMid meet"
       className="sendButton"
+      onClick={onClick}
     >
       <g
         transform="translate(0.000000,515.000000) scale(0.100000,-0.100000)"
