@@ -3,8 +3,6 @@
     display: flex;
     align-items: center;
     background-color: #585b64;
-    position: sticky;
-    bottom: 0;
 }
 
 .textbox {

@@ -3,6 +3,7 @@ import MessagePageHeader from "./MessagePageHeader";
 import Messages from "./Messages";
 import MessageSender from "./MessageSender";
 import defaultUserPic from "../../Images/defaultUser.jpeg";
+import "./MessagePage.css";
 
 const MessagePage = (props) => {
   const { headerInfo, ws } = props;
@@ -10,7 +11,7 @@ const MessagePage = (props) => {
   headerInfo.profilePicUrl = headerInfo.profilePicUrl || defaultUserPic;
 
   return (
-    <div>
+    <div className="messagePage">
       <MessagePageHeader {...headerInfo} />
       <Messages messages={messages} setMessages={setMessages} ws={ws} />
       <MessageSender

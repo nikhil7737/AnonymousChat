@@ -1,11 +1,8 @@
 .messagePageHeader {
-  position: sticky;
-  top: 0;
   background-color: #373e4e;
   padding: 16px 12px;
   display: flex;
-	align-items: center;
-  width: 100%;
+  align-items: center;
 }
 
 .messagePageheaderImg {
