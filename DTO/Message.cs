@@ -10,5 +10,7 @@ namespace AnonymousChat.DTO
         public string Text { get; set; }
         [JsonPropertyName("type")]
         public MessageType Type { get; set; }
+        [JsonPropertyName("senderName")]
+        public string SenderName { get; set; }
     }
 }

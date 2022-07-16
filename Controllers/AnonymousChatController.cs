@@ -30,7 +30,7 @@ namespace AnonymousChat.Controllers
             if (ConnectionManager.FreeClients.Count == 0)
             {
                 ConnectionManager.FreeClients.Add(currentClient);
-                await HandleChat(currentClient.Connection);
+                await HandleChat(currentClient);
             }
             else
             {
@@ -46,22 +46,27 @@ namespace AnonymousChat.Controllers
             var message = new Message
             {
                 Type = MessageType.AnonymousUserFound,
+                Text = freeClient.Name
             };
             Task sendTask1 = currentClient.Connection.SendMessage(message);
+
+            message.Text = currentClient.Name;
             Task sendTask2 = freeClient.Connection.SendMessage(message);
             await Task.WhenAll(sendTask1, sendTask2);
-            await HandleChat(currentClient.Connection);
+            await HandleChat(currentClient);
         }
 
-        private async Task HandleChat(WebSocket sender)
+        private async Task HandleChat(Client client)
         {
+            WebSocket connection = client.Connection;
             WebSocket receiver = null;
-            while (ConnectionUtils.AreConnectionsAlive(sender, receiver))
+            while (ConnectionUtils.AreConnectionsAlive(connection, receiver))
             {
-                Message message = await sender.GetMessage();
+                Message message = await connection.GetMessage();
+                message.SenderName = client.Name;
                 if (receiver == null)
                 {
-                    receiver = ConnectionManager.GetPairedUser(sender);
+                    receiver = ConnectionManager.GetPairedUser(connection);
                 }
                 if (message.Type == MessageType.EndAnonymousChatRequested)
                 {
