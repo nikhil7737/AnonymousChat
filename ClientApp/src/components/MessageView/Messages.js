@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { messageType } from "../../Utils";
 import "./Messages.css";
 
@@ -11,7 +11,13 @@ const Messages = (props) => {
   //     }
   // ]
 
-  const {messages, setMessages, ws} = props;
+  useEffect(() => {
+    const messageContainer = document.querySelector(".messages");
+    const lastMessage = messageContainer.lastChild?.lastChild;
+    lastMessage?.scrollIntoView({ behavior: "smooth", block: "end" });
+  });
+
+  const { messages, setMessages, ws } = props;
   ws.onmessage = (e) => {
     const message = JSON.parse(e.data);
     if (message.type === messageType.anonymousChatEnded) {
