@@ -4,7 +4,7 @@ import "./Svgs.css";
 export const LeftArrow = () => {
   return (
     <svg
-      class="leftArrow"
+      className="leftArrow"
       viewBox="0 0 16 16"
       fill="currentcolor"
       tabIndex="-1"

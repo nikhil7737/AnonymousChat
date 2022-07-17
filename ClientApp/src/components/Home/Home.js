@@ -53,7 +53,7 @@ const Home = () => {
         <img
           width="130px"
           height="110px"
-          class="chatIcon"
+          className="chatIcon"
           src={chatIcon}
           alt="chatIcon"
         />
