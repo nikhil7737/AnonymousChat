@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Home.css";
 import MessagePage from "../MessageView/MessagePage";
+import FindingUserLoader from "../Loader/FindingUserLoader";
 import chatIcon from "../../Images/chatIcon.png";
 import { wsConnectUrl, messageType } from "../../Utils";
 
@@ -8,6 +9,7 @@ let ws, userName, pairedUser;
 
 const Home = () => {
   const [hasChatStarted, setHasChatStarted] = useState(false);
+  const [isReqeustSent, setIsRequestSent] = useState(false);
 
   if (hasChatStarted) {
     const headerInfo = {
@@ -15,6 +17,10 @@ const Home = () => {
       description: "just chatting",
     };
     return <MessagePage ws={ws} headerInfo={headerInfo} />;
+  }
+
+  if (isReqeustSent) {
+    return <FindingUserLoader />
   }
 
   const startChat = () => {
@@ -27,6 +33,7 @@ const Home = () => {
     console.log(wsConnectUrl);
     ws = new WebSocket(wsConnectUrl);
     sendName(ws, userName);
+    setIsRequestSent(true);
     ws.onmessage = (e) => {
       const message = JSON.parse(e.data);
       if (message.type === messageType.anonymousUserFound) {
