@@ -1,5 +1,7 @@
 .messagePage {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  position: fixed;
+  width: 100%;
 }
