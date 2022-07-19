@@ -6,5 +6,6 @@ namespace AnonymousChat.Enums
         EndAnonymousChatRequested = 2,
         AnonymousChatEnded = 3,
         TextMessage = 4,
+        Ping = 5,
     }
 }

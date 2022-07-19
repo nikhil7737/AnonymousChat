@@ -76,7 +76,7 @@ namespace AnonymousChat.Controllers
                     });
                     break;
                 }
-                else
+                else if (message.Type == MessageType.TextMessage)
                 {
                     await receiver.SendMessage(message);
                 }

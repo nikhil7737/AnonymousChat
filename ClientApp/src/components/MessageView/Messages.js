@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { messageType } from "../../Utils";
+import { messageType, pingInterval } from "../../Utils";
 import "./Messages.css";
+
+let callbackId;
 
 const Messages = (props) => {
   // messages = [
@@ -15,6 +17,14 @@ const Messages = (props) => {
     const messageContainer = document.querySelector(".messages");
     const lastMessage = messageContainer.lastChild?.lastChild;
     lastMessage?.scrollIntoView({ behavior: "smooth", block: "end" });
+    clearInterval(callbackId);
+    callbackId = setInterval(() => {
+      ws.send(
+        JSON.stringify({
+          type: messageType.ping,
+        })
+      );
+    }, pingInterval);
   });
 
   const { messages, setMessages, ws } = props;
