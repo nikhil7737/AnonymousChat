@@ -1,0 +1,1 @@
+Currently a very basic chat app with no login functionality. Users can head over to <a href="http://strangerlychat.herokuapp.com/">http://strangerlychat.herokuapp.com/</a> and chat with others. Currently just text messaging is supported. Will add more functionalities in future
